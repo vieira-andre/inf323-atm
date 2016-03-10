@@ -1,4 +1,4 @@
-package br.ic.unicamp.caixaautomatico;
+package br.unicamp.ic.caixaautomatico;
 
 public class Principal {
 

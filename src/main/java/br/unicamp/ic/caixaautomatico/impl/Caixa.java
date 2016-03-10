@@ -1,6 +1,6 @@
-package br.ic.unicamp.caixaautomatico.impl;
+package br.unicamp.ic.caixaautomatico.impl;
 
-import br.ic.unicamp.caixaautomatico.spec.ICaixa;
+import br.unicamp.ic.caixaautomatico.spec.ICaixa;
 
 public class Caixa implements ICaixa {
 

@@ -1,4 +1,4 @@
-package br.ic.unicamp.caixaautomatico.spec;
+package br.unicamp.ic.caixaautomatico.spec;
 
 public interface IControladorCaixa {
 

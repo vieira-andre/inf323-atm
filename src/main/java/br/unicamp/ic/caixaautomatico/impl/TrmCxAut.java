@@ -1,6 +1,6 @@
-package br.ic.unicamp.caixaautomatico.impl;
+package br.unicamp.ic.caixaautomatico.impl;
 
-import br.ic.unicamp.caixaautomatico.spec.ITrmCxAut;
+import br.unicamp.ic.caixaautomatico.spec.ITrmCxAut;
 
 public class TrmCxAut implements ITrmCxAut {
 
