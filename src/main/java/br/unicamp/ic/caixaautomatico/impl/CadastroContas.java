@@ -7,13 +7,13 @@ import br.unicamp.ic.caixaautomatico.spec.ICadastroContas;
 import br.unicamp.ic.caixaautomatico.spec.IConta;
 
 public class CadastroContas implements ICadastroContas {
-	List<ContaBase> registroDeContas = new ArrayList<ContaBase>();
+	List<IConta> registroDeContas = new ArrayList<IConta>();
 
 	static int contador;
 
 	@Override
 	public IConta buscaConta(int numeroConta) {
-		if (this.registroDeContas.contains(numeroConta)) {
+		if (numeroConta < registroDeContas.size()) {
 			return registroDeContas.get(numeroConta);
 		}
 
@@ -25,6 +25,7 @@ public class CadastroContas implements ICadastroContas {
 		contador++;
 
 		IConta conta = new ContaCor(titular, saldoAtual, contador, senha);
+		registroDeContas.add(conta);
 
 		return conta;
 	}
@@ -34,6 +35,7 @@ public class CadastroContas implements ICadastroContas {
 		contador++;
 
 		IConta conta = new ContaEsp(titular, saldoAtual, contador, senha);
+		registroDeContas.add(conta);
 
 		return conta;
 	}
