@@ -9,7 +9,6 @@ public class ContaCor extends ContaBase {
 
 	public ContaCor(String titular, float saldoAtual, int numConta, int senha) {
 		super(titular, saldoAtual, numConta, senha);
-		super.setLimiteDeSaque(200);
 	}
 
 	@Override
@@ -30,6 +29,11 @@ public class ContaCor extends ContaBase {
 	@Override
 	public boolean creditarValor(String historico, float valor) throws CreditarValorException {
 		return super.creditarValor(historico, valor);
+	}
+	
+	@Override
+	public void setLimiteDeSaque(float valor) {
+		super.setLimiteDeSaque(valor);
 	}
 
 }
