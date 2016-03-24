@@ -16,7 +16,6 @@ public abstract class ContaBase implements IConta {
 
 	private int estado;
 	private float saldoAnterior;
-	// private List<String> datas;
 	private List<String> historico;
 	private List<Float> valorLanc;
 	private int ultLanc;
@@ -36,7 +35,6 @@ public abstract class ContaBase implements IConta {
 		this.numConta = numConta;
 		this.senha = senha;
 
-		// this.datas = new ArrayList<String>();
 		this.historico = new ArrayList<String>();
 		this.valorLanc = new ArrayList<Float>();
 		this.ultLanc = this.valorLanc.size() - 1;
@@ -53,8 +51,6 @@ public abstract class ContaBase implements IConta {
 		} else {
 			throw new ObterSaldoException("A conta deve estar ativa");
 		}
-
-		// return -1;
 	}
 
 	@Override
@@ -73,28 +69,6 @@ public abstract class ContaBase implements IConta {
 					sb.append("\n");
 				}
 
-				// for (int i = 0; i < datas.size(); i++) {
-				// for (int x = 0; x < historico.size(); x++) {
-				// for (int y = 0; y < valorLanc.size(); y++) {
-				// float valorAtualizado = valorLanc.get(y);
-				//
-				// if
-				// (historico.get(x).equals(normalizaString("Débito").toLowerCase()))
-				// {
-				// valorAtualizado *= -1;
-				// }
-				//
-				// sb.append(datas.get(i) + " - " + historico.get(x) + " - "
-				// + String.format("%.2f", valorAtualizado));
-				//
-				// sb.append("\n");
-				//
-				// x++;
-				// i++;
-				// }
-				// }
-				// }
-
 				sb.append("SALDO: " + this.saldoAtual);
 
 				return sb.toString();
@@ -104,15 +78,11 @@ public abstract class ContaBase implements IConta {
 		} else {
 			throw new ObterExtratoException("A conta deve estar ativa");
 		}
-
-		// return null;
 	}
 
 	@Override
 	public boolean debitarValor(String historico, float valor, int pwd) throws DebitarValorException {
 		if (isContaAtiva()) {
-			throw new DebitarValorException("A conta deve estar ativa");
-		} else {
 			if (isSenhaCorreta(pwd)) {
 				if (isValorMaiorQueZero(valor)) {
 					if (isSaldoAtualMaiorOuIgualValor(valor)) {
@@ -121,7 +91,6 @@ public abstract class ContaBase implements IConta {
 								this.saldoAnterior = this.saldoAtual;
 								this.saldoAtual -= valor;
 
-								// this.datas.add(getDataAtual());
 								this.historico.add(historico);
 								this.valorLanc.add(valor);
 
@@ -141,6 +110,8 @@ public abstract class ContaBase implements IConta {
 			} else {
 				throw new DebitarValorException("A senha de entrada deve ser igual à senha da conta");
 			}
+		} else {
+			throw new DebitarValorException("A conta deve estar ativa");
 		}
 	}
 
@@ -151,7 +122,6 @@ public abstract class ContaBase implements IConta {
 				this.saldoAnterior = this.saldoAtual;
 				this.saldoAtual += valor;
 
-				// this.datas.add(getDataAtual());
 				this.historico.add(historico);
 				this.valorLanc.add(valor);
 
@@ -167,35 +137,6 @@ public abstract class ContaBase implements IConta {
 	public void setLimiteDeSaque(float valor) {
 		this.limiteDeSaque = valor;
 	}
-
-	// private String getDataAtual() {
-	// Calendar data = Calendar.getInstance();
-	// SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-	//
-	// return formato.format(data.getTime()).toString();
-	// }
-	//
-	// private String normalizaString(String string) {
-	// return Normalizer.normalize(string, Form.NFD);
-	// }
-
-	// private boolean isSacavel(int pwd, float valor) {
-	// if (isSenhaCorreta(pwd)) {
-	// if (isContaAtiva()) {
-	// if (isValorMaiorQueZero(valor)) {
-	// if (isSaldoAtualMaiorOuIgualValor(valor)) {
-	// if (isValorDentroDoLimite(valor)) {
-	// if (isValorMultiploDe10(valor)) {
-	// return true;
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	//
-	// return false;
-	// }
 
 	private boolean isSenhaCorreta(int pwd) {
 		if (pwd == this.senha) {
