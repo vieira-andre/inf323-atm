@@ -7,7 +7,7 @@ import br.unicamp.ic.caixaautomatico.spec.ICadastroContas;
 import br.unicamp.ic.caixaautomatico.spec.IConta;
 
 public class CadastroContas implements ICadastroContas {
-	List<IConta> registroDeContas = new ArrayList<IConta>();
+	static List<IConta> registroDeContas = new ArrayList<IConta>();
 
 	static int contador;
 

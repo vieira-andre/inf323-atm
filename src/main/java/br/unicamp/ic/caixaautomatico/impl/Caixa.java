@@ -1,28 +1,37 @@
 package br.unicamp.ic.caixaautomatico.impl;
 
+import br.unicamp.ic.caixaautomatico.exceptions.RecarregarCaixaException;
 import br.unicamp.ic.caixaautomatico.spec.ICaixa;
 
 public class Caixa implements ICaixa {
 
+	private int senha;
+	private float saldoDoCaixa;
+
 	public Caixa(int senhaCaixa) {
-		// TODO código do construtor
+		this.senha = senhaCaixa;
 	}
 
 	@Override
-	public void recarregar(int pwd) {
-		// TODO Auto-generated method stub
-
+	public void recarregar(int pwd) throws RecarregarCaixaException {
+		if (this.validarSenha(pwd)) {
+			this.saldoDoCaixa = 1000;
+		} else {
+			throw new RecarregarCaixaException("Senha incorreta!");
+		}
 	}
 
 	@Override
 	public float obterSaldoCaixa() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.saldoDoCaixa;
 	}
 
 	@Override
 	public boolean validarSenha(int pwd) {
-		// TODO Auto-generated method stub
+		if (pwd == this.senha) {
+			return true;
+		}
+
 		return false;
 	}
 
