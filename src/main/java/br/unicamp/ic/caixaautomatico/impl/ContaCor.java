@@ -30,10 +30,5 @@ public class ContaCor extends ContaBase {
 	public boolean creditarValor(String historico, float valor) throws CreditarValorException {
 		return super.creditarValor(historico, valor);
 	}
-	
-	@Override
-	public void setLimiteDeSaque(float valor) {
-		super.setLimiteDeSaque(valor);
-	}
 
 }

@@ -25,7 +25,8 @@ public class CadastroContas implements ICadastroContas {
 		contador++;
 
 		IConta conta = new ContaCor(titular, saldoAtual, contador, senha);
-		conta.setLimiteDeSaque(200);
+		conta.setLimiteDeSaque(200f);
+
 		registroDeContas.add(conta);
 
 		return conta;
@@ -36,7 +37,8 @@ public class CadastroContas implements ICadastroContas {
 		contador++;
 
 		IConta conta = new ContaEsp(titular, saldoAtual, contador, senha);
-		conta.setLimiteDeSaque(500);
+		conta.setLimiteDeSaque(500f);
+
 		registroDeContas.add(conta);
 
 		return conta;

@@ -134,10 +134,6 @@ public abstract class ContaBase implements IConta {
 		}
 	}
 
-	public void setLimiteDeSaque(float valor) {
-		this.limiteDeSaque = valor;
-	}
-
 	private boolean isSenhaCorreta(int pwd) {
 		if (pwd == this.senha) {
 			return true;
@@ -184,6 +180,10 @@ public abstract class ContaBase implements IConta {
 		}
 
 		return false;
+	}
+	
+	public void setLimiteDeSaque(float valor) {
+		this.limiteDeSaque = valor;
 	}
 
 }
