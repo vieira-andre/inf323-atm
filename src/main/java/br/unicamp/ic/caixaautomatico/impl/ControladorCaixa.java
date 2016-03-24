@@ -1,5 +1,8 @@
 package br.unicamp.ic.caixaautomatico.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import br.unicamp.ic.caixaautomatico.exceptions.DebitarValorException;
 import br.unicamp.ic.caixaautomatico.exceptions.EfetuarSaqueException;
 import br.unicamp.ic.caixaautomatico.exceptions.ObterExtratoException;
@@ -58,23 +61,32 @@ public class ControladorCaixa implements IControladorCaixa {
 	@Override
 	public boolean efetuarSaque(int numeroConta, int pwd, float valor)
 			throws EfetuarSaqueException, DebitarValorException {
-		if (!isValorMaiorQueZero(valor)) {
-			throw new DebitarValorException("Valor Saque dever ser maior que 0");
-		}
-
-		if (!isValorMultiploDe10(valor)) {
-			throw new EfetuarSaqueException("Valor Saque dever ser múltiplo de 10 (10, 20, 30 ...)");
-		}
-
-		if (!isSaldoDoCaixaMaiorOuIgualValor(caixa.obterSaldoCaixa(), valor)) {
-			throw new DebitarValorException(
-					"Valor Saque dever ser menor que valor disponível do caixa " + caixa.obterSaldoCaixa());
-		}
+		// if (!isValorMaiorQueZero(valor)) {
+		// throw new DebitarValorException("Valor Saque dever ser maior que 0");
+		// }
+		//
+		// if (!isValorMultiploDe10(valor)) {
+		// throw new EfetuarSaqueException("Valor Saque dever ser múltiplo de 10
+		// (10, 20, 30 ...)");
+		// }
+		//
+		// if (!isSaldoDoCaixaMaiorOuIgualValor(caixa.obterSaldoCaixa(), valor))
+		// {
+		// throw new DebitarValorException(
+		// "Valor Saque dever ser menor que valor disponível do caixa " +
+		// caixa.obterSaldoCaixa());
+		// }
 
 		IConta conta = cadastroContas.buscaConta(numeroConta);
 
 		if (conta != null) {
+			String historico = getDataAtual() + " - " + "Débito" + " - " + valor;
 
+			try {
+				conta.debitarValor(historico, valor, pwd);
+			} catch (DebitarValorException e) {
+				e.getMessage();
+			}
 		} else {
 			throw new EfetuarSaqueException("Número de conta inválido" + numeroConta);
 		}
@@ -100,28 +112,36 @@ public class ControladorCaixa implements IControladorCaixa {
 		return false;
 	}
 
-	private boolean isValorMaiorQueZero(float valor) {
-		if (valor > 0) {
-			return true;
-		}
+	// private boolean isValorMaiorQueZero(float valor) {
+	// if (valor > 0) {
+	// return true;
+	// }
+	//
+	// return false;
+	// }
+	//
+	// private boolean isValorMultiploDe10(float valor) {
+	// if (valor % 10 == 0) {
+	// return true;
+	// }
+	//
+	// return false;
+	// }
+	//
+	// private boolean isSaldoDoCaixaMaiorOuIgualValor(float saldoDoCaixa, float
+	// valor) {
+	// if (saldoDoCaixa >= valor) {
+	// return true;
+	// }
+	//
+	// return false;
+	// }
 
-		return false;
-	}
+	private String getDataAtual() {
+		Calendar data = Calendar.getInstance();
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-	private boolean isValorMultiploDe10(float valor) {
-		if (valor % 10 == 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean isSaldoDoCaixaMaiorOuIgualValor(float saldoDoCaixa, float valor) {
-		if (saldoDoCaixa >= valor) {
-			return true;
-		}
-
-		return false;
+		return formato.format(data.getTime()).toString();
 	}
 
 }
