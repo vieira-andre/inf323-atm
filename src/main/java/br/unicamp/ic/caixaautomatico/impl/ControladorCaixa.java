@@ -61,21 +61,18 @@ public class ControladorCaixa implements IControladorCaixa {
 	@Override
 	public boolean efetuarSaque(int numeroConta, int pwd, float valor)
 			throws EfetuarSaqueException, DebitarValorException {
-		// if (!isValorMaiorQueZero(valor)) {
-		// throw new DebitarValorException("Valor Saque dever ser maior que 0");
-		// }
-		//
-		// if (!isValorMultiploDe10(valor)) {
-		// throw new EfetuarSaqueException("Valor Saque dever ser múltiplo de 10
-		// (10, 20, 30 ...)");
-		// }
-		//
-		// if (!isSaldoDoCaixaMaiorOuIgualValor(caixa.obterSaldoCaixa(), valor))
-		// {
-		// throw new DebitarValorException(
-		// "Valor Saque dever ser menor que valor disponível do caixa " +
-		// caixa.obterSaldoCaixa());
-		// }
+		if (!isValorMaiorQueZero(valor)) {
+			throw new DebitarValorException("Valor Saque dever ser maior que 0");
+		}
+
+		if (!isValorMultiploDe10(valor)) {
+			throw new EfetuarSaqueException("Valor Saque dever ser múltiplo de 10 (10, 20, 30 ...)");
+		}
+
+		if (!isSaldoDoCaixaMaiorOuIgualValor(caixa.obterSaldoCaixa(), valor)) {
+			throw new DebitarValorException(
+					"Valor Saque dever ser menor que valor disponível do caixa " + caixa.obterSaldoCaixa());
+		}
 
 		IConta conta = cadastroContas.buscaConta(numeroConta);
 
@@ -112,30 +109,29 @@ public class ControladorCaixa implements IControladorCaixa {
 		return false;
 	}
 
-	// private boolean isValorMaiorQueZero(float valor) {
-	// if (valor > 0) {
-	// return true;
-	// }
-	//
-	// return false;
-	// }
-	//
-	// private boolean isValorMultiploDe10(float valor) {
-	// if (valor % 10 == 0) {
-	// return true;
-	// }
-	//
-	// return false;
-	// }
-	//
-	// private boolean isSaldoDoCaixaMaiorOuIgualValor(float saldoDoCaixa, float
-	// valor) {
-	// if (saldoDoCaixa >= valor) {
-	// return true;
-	// }
-	//
-	// return false;
-	// }
+	private boolean isValorMaiorQueZero(float valor) {
+		if (valor > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean isValorMultiploDe10(float valor) {
+		if (valor % 10 == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean isSaldoDoCaixaMaiorOuIgualValor(float saldoDoCaixa, float valor) {
+		if (saldoDoCaixa >= valor) {
+			return true;
+		}
+
+		return false;
+	}
 
 	private String getDataAtual() {
 		Calendar data = Calendar.getInstance();
