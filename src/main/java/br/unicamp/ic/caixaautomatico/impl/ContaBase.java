@@ -96,10 +96,10 @@ public abstract class ContaBase implements IConta {
 
 								return true;
 							} else {
-								return false;
+								throw new DebitarValorException("O valor deve ser múltiplo de 10.");
 							}
 						} else {
-							return false;
+							throw new DebitarValorException("O valor não pode ser superior ao limite");
 						}
 					} else {
 						throw new DebitarValorException("O valor do lançamento não pode ser superior ao saldo");
