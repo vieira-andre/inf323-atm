@@ -9,6 +9,7 @@ public class ContaEsp extends ContaBase {
 
 	public ContaEsp(String titular, float saldoAtual, int numConta, int senha) {
 		super(titular, saldoAtual, numConta, senha);
+		super.setLimiteDeSaque(500);
 	}
 
 	@Override
