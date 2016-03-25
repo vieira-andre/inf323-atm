@@ -40,6 +40,18 @@ public abstract class ContaBase implements IConta {
 		this.ultLanc = this.valorLanc.size() - 1;
 	}
 
+	protected void setLimiteDeSaque(float valor) {
+		this.limiteDeSaque = valor;
+	}
+
+	public float getLimiteDeSaque() {
+		return this.limiteDeSaque;
+	}
+
+	public int getSenha() {
+		return this.senha;
+	}
+
 	@Override
 	public float obterSaldo(int pwd) throws ObterSaldoException {
 		if (isContaAtiva()) {
@@ -180,10 +192,6 @@ public abstract class ContaBase implements IConta {
 		}
 
 		return false;
-	}
-	
-	public void setLimiteDeSaque(float valor) {
-		this.limiteDeSaque = valor;
 	}
 
 }

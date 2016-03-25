@@ -13,6 +13,4 @@ public interface IConta {
 	boolean debitarValor(String historico, float valor, int pwd) throws DebitarValorException;
 
 	boolean creditarValor(String historico, float valor) throws CreditarValorException;
-
-	void setLimiteDeSaque(float valor);
 }
