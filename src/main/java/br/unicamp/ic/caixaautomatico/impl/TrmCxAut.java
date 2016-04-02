@@ -6,10 +6,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
-import br.unicamp.ic.caixaautomatico.exceptions.DebitarValorException;
-import br.unicamp.ic.caixaautomatico.exceptions.EfetuarSaqueException;
-import br.unicamp.ic.caixaautomatico.exceptions.ObterSaldoException;
-import br.unicamp.ic.caixaautomatico.exceptions.RecarregarCaixaException;
 import br.unicamp.ic.caixaautomatico.spec.ITrmCxAut;
 
 public class TrmCxAut implements ITrmCxAut {
@@ -32,49 +28,36 @@ public class TrmCxAut implements ITrmCxAut {
 		op = getOp();
 
 		while (op != 9) {
-			switch (op) {
-			case 1:
-				float saldo = 0;
+			try {
+				switch (op) {
+				case 1:
+					float saldo = controladorCaixa.consultarSaldo(getInt("número da conta"), getInt("senha"));
 
-				try {
-					saldo = controladorCaixa.consultarSaldo(getInt("número da conta"), getInt("senha"));
-				} catch (ObterSaldoException e) {
-					e.getMessage();
-				}
+					if (saldo != -1) // testa se consulta foi rejeitada
+						System.out.println("Saldo atual: " + saldo);
 
-				if (saldo == -1) // testa se consulta foi rejeitada
-					System.out.println("conta/senha inválida");
-				else
-					System.out.println("Saldo atual: " + saldo);
+					break;
+				case 2:
+					boolean b = controladorCaixa.efetuarSaque(getInt("número da conta"), getInt("senha"),
+							getInt("valor"));
 
-				break;
-			case 2:
-				boolean b = false;
+					if (b) // testa se saque foi aceito
+						System.out.println("Pode retirar o dinheiro");
+					else
+						System.out.println("Pedido de saque recusado");
 
-				try {
-					b = controladorCaixa.efetuarSaque(getInt("número da conta"), getInt("senha"), getInt("valor"));
-				} catch (EfetuarSaqueException | DebitarValorException e) {
-					e.getMessage();
-				}
-
-				if (b) // testa se saque foi aceito
-					System.out.println("Pode retirar o dinheiro");
-				else
-					System.out.println("Pedido de saque recusado");
-
-				break;
-			case 3:
-				try {
+					break;
+				case 3:
 					controladorCaixa.recarregar(getInt("senha"));
-				} catch (RecarregarCaixaException e) {
-					e.getMessage();
+
+					break;
+				case 8:
+					this.alternarModo(getInt("senha do supervisor"));
+
+					break;
 				}
-
-				break;
-			case 8:
-				this.alternarModo(getInt("senha do supervisor"));
-
-				break;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 
 			op = getOp();

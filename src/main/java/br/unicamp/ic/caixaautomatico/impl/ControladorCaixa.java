@@ -15,11 +15,13 @@ import br.unicamp.ic.caixaautomatico.spec.IControladorCaixa;
 public class ControladorCaixa implements IControladorCaixa {
 
 	private int senhaDoCaixa;
-	Caixa caixa;
-	ICadastroContas cadastroContas = new CadastroContas();
+	private Caixa caixa;
+	private ICadastroContas cadastroContas;
 
 	public ControladorCaixa(int senhaCaixa) {
 		this.senhaDoCaixa = senhaCaixa;
+
+		this.cadastroContas = new CadastroContas();
 
 		this.caixa = new Caixa(this.senhaDoCaixa);
 	}
@@ -32,7 +34,7 @@ public class ControladorCaixa implements IControladorCaixa {
 			try {
 				return conta.obterSaldo(pwd);
 			} catch (ObterSaldoException e) {
-				e.getMessage();
+				System.out.println(e.getMessage());
 			}
 		} else {
 			throw new ObterSaldoException("Número de conta inválido");
@@ -49,7 +51,7 @@ public class ControladorCaixa implements IControladorCaixa {
 			try {
 				return conta.obterExtrato(pwd);
 			} catch (ObterExtratoException e) {
-				e.getMessage();
+				System.out.println(e.getMessage());
 			}
 		} else {
 			throw new ObterExtratoException("Número de conta inválido");
@@ -77,13 +79,15 @@ public class ControladorCaixa implements IControladorCaixa {
 
 			try {
 				conta.debitarValor(historico, valor, pwd);
+				
+				return true;
 			} catch (DebitarValorException e) {
-				e.getMessage();
+				System.out.println(e.getMessage());
 			}
 		} else {
 			throw new EfetuarSaqueException("Número de conta inválido " + numeroConta);
 		}
-
+		
 		return false;
 	}
 

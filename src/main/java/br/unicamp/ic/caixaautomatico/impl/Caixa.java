@@ -10,6 +10,7 @@ public class Caixa implements ICaixa {
 
 	public Caixa(int senhaCaixa) {
 		this.senha = senhaCaixa;
+		this.saldoDoCaixa = 0;
 	}
 
 	@Override
@@ -37,8 +38,11 @@ public class Caixa implements ICaixa {
 
 	@Override
 	public void liberarNotas(int quantidade) {
-		// TODO Auto-generated method stub
+		this.saldoDoCaixa -= quantidade;
 
+		for (int i = 0; i < quantidade; i++) {
+			System.out.println("===/ R$ 10,00 /===>");
+		}
 	}
 
 }
