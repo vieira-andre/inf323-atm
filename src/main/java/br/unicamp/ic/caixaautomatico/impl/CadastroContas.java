@@ -12,14 +12,14 @@ public class CadastroContas implements ICadastroContas {
 	static int contador;
 
 	public CadastroContas() {
-		this.criarContaCorrente("Ursula", 500, 1);
-		System.out.println("Criada conta 1 senha 1 com 500,00");
-
-		this.criarContaCorrente("Mia", 500, 2);
-		System.out.println("Criada conta 2 senha 2 com 500,00");
-
-		this.criarContaCorrente("Alfredo", 500, 3);
-		System.out.println("Criada conta 3 senha 3 com 500,00");
+		// this.criarContaCorrente("Ursula", 500, 1);
+		// System.out.println("Criada conta 1 senha 1 com 500,00");
+		//
+		// this.criarContaCorrente("Mia", 500, 2);
+		// System.out.println("Criada conta 2 senha 2 com 500,00");
+		//
+		// this.criarContaCorrente("Alfredo", 500, 3);
+		// System.out.println("Criada conta 3 senha 3 com 500,00");
 	}
 
 	@Override
