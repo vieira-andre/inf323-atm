@@ -40,7 +40,7 @@ public class Caixa implements ICaixa {
 	public void liberarNotas(int quantidade) {
 		this.saldoDoCaixa -= quantidade;
 
-		for (int i = 0; i < quantidade; i++) {
+		for (int i = 0; i < quantidade / 10; i++) {
 			System.out.println("===/ R$ 10,00 /===>");
 		}
 	}

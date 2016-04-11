@@ -80,6 +80,8 @@ public class ControladorCaixa implements IControladorCaixa {
 			try {
 				conta.debitarValor(historico, valor, pwd);
 				
+				caixa.liberarNotas((int) valor);
+				
 				return true;
 			} catch (DebitarValorException e) {
 				System.out.println(e.getMessage());
