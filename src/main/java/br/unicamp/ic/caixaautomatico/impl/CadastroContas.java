@@ -21,14 +21,14 @@ public class CadastroContas implements ICadastroContas {
 		// this.criarContaCorrente("Alfredo", 500, 3);
 		// System.out.println("Criada conta 3 senha 3 com 500,00");
 
-		// this.criarContaCorrente("Titular 1", 1000, 1234);
-		// this.criarContaEspecial("Titular 2", 2000, 9876);
-		// this.criarContaCorrente("Titular 3", 1750, 5678);
-		// this.criarContaEspecial("Titular 4", 2700, 5432);
-		// this.criarContaCorrente("Titular 5", 1500, 9012);
-		// this.criarContaEspecial("Titular 6", 3000, 1098);
-		// this.criarContaCorrente("Titular 7", 800, 3456);
-		// this.criarContaEspecial("Titular 8", 4000, 7654);
+		 this.criarContaCorrente("Titular 1", 1000, 1234);
+		 this.criarContaEspecial("Titular 2", 2000, 9876);
+		 this.criarContaCorrente("Titular 3", 1750, 5678);
+		 this.criarContaEspecial("Titular 4", 2700, 5432);
+		 this.criarContaCorrente("Titular 5", 1500, 9012);
+		 this.criarContaEspecial("Titular 6", 3000, 1098);
+		 this.criarContaCorrente("Titular 7", 800, 3456);
+		 this.criarContaEspecial("Titular 8", 4000, 7654);
 	}
 
 	@Override

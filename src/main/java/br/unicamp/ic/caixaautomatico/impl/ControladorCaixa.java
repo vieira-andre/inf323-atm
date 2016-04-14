@@ -67,21 +67,13 @@ public class ControladorCaixa implements IControladorCaixa {
 		IConta conta = cadastroContas.buscaConta(numeroConta);
 
 		if (conta != null) {
-			if (pwd != ((ContaBase) conta).getSenha()) {
-				throw new DebitarValorException("A senha de entrada deve ser igual à senha da conta");
-			}
-
-			if (valor > ((ContaBase) conta).getLimiteDeSaque()) {
-				throw new DebitarValorException("O valor não pode ser superior ao limite");
-			}
-
 			String historico = getDataAtual() + " - " + "Débito" + " - " + valor;
 
 			try {
 				conta.debitarValor(historico, valor, pwd);
-				
+
 				caixa.liberarNotas((int) valor);
-				
+
 				return true;
 			} catch (DebitarValorException e) {
 				System.out.println(e.getMessage());
@@ -89,7 +81,7 @@ public class ControladorCaixa implements IControladorCaixa {
 		} else {
 			throw new EfetuarSaqueException("Número de conta inválido " + numeroConta);
 		}
-		
+
 		return false;
 	}
 

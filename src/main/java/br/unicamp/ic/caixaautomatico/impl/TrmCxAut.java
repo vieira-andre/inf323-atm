@@ -40,8 +40,6 @@ public class TrmCxAut implements ITrmCxAut {
 				case 2:
 					boolean b = controladorCaixa.efetuarSaque(getInt("número da conta"), getInt("senha"),
 							getInt("valor"));
-					
-					
 
 					if (b) // testa se saque foi aceito
 						System.out.println("Pode retirar o dinheiro");
@@ -73,6 +71,8 @@ public class TrmCxAut implements ITrmCxAut {
 				this.modoAtual = TrmCxAut.MODO_CLIENTE;
 			else
 				this.modoAtual = TrmCxAut.MODO_SUPERVISOR;
+		} else {
+			throw new IllegalArgumentException("Senha incorreta!");
 		}
 	}
 
