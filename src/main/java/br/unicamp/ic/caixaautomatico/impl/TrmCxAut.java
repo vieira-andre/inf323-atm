@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
+import br.unicamp.ic.caixaautomatico.exceptions.CreditarValorException;
 import br.unicamp.ic.caixaautomatico.exceptions.DebitarValorException;
+import br.unicamp.ic.caixaautomatico.exceptions.ObterExtratoException;
 import br.unicamp.ic.caixaautomatico.exceptions.ObterSaldoException;
 import br.unicamp.ic.caixaautomatico.exceptions.RecarregarCaixaException;
 import br.unicamp.ic.caixaautomatico.spec.ITrmCxAut;
@@ -73,6 +75,24 @@ public class TrmCxAut implements ITrmCxAut {
 					}
 
 					break;
+				case 4:
+					try {
+						System.out.println(controladorCaixa.consultarExtrato(getInt("número da conta"), getInt("senha")));
+					} catch (ObterExtratoException e) {
+						System.out.println(e.getMessage());
+					}
+
+					break;
+				case 5:
+					try {
+						controladorCaixa.efetuarDeposito(getInt("número da conta"), getInt("valor"));
+
+						System.out.println("Depósito efetuado");
+					} catch (CreditarValorException e) {
+						System.out.println(e.getMessage());
+					}
+
+					break;
 				case 8:
 					this.alternarModo(getInt("senha do supervisor"));
 
@@ -108,11 +128,11 @@ public class TrmCxAut implements ITrmCxAut {
 
 		do {
 			if (modoAtual == 1) { // modo cliente
-				op = getInt("opcao: 1 = consulta saldo, 2 = saque, 8=modo supervisor, 9=sai");
-				if (op != 1 && op != 2 && op != 8 && op != 9)
+				op = getInt("opcao: 1 = consulta saldo, 2 = saque, 4 = consulta extrato, 5 = deposito, 8 = modo supervisor, 9 = sai");
+				if (op != 1 && op != 2 && op != 4 && op != 5 && op != 8 && op != 9)
 					op = 0;
 			} else { // modo supervisor
-				op = getInt("opcao: 1 = consulta saldo do caixa, 3 = recarrega, 8=modo cliente, 9=sai");
+				op = getInt("opcao: 1 = consulta saldo do caixa, 3 = recarrega, 8 = modo cliente, 9 = sai");
 				if (op != 1 && op != 3 && op != 8 && op != 9)
 					op = 0;
 			}

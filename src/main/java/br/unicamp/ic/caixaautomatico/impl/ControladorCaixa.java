@@ -3,6 +3,7 @@ package br.unicamp.ic.caixaautomatico.impl;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import br.unicamp.ic.caixaautomatico.exceptions.CreditarValorException;
 import br.unicamp.ic.caixaautomatico.exceptions.DebitarValorException;
 import br.unicamp.ic.caixaautomatico.exceptions.EfetuarSaqueException;
 import br.unicamp.ic.caixaautomatico.exceptions.ObterExtratoException;
@@ -66,7 +67,26 @@ public class ControladorCaixa implements IControladorCaixa {
 
 			return false;
 		} else {
-			throw new EfetuarSaqueException("Número de conta inválido " + numeroConta);
+			throw new EfetuarSaqueException("Número de conta inválido (" + numeroConta + ")");
+		}
+	}
+
+	@Override
+	public boolean efetuarDeposito(int numeroConta, float valor) throws CreditarValorException {
+
+		IConta conta = cadastroContas.buscaConta(numeroConta);
+
+		if (conta != null) {
+			String historico = getDataAtual() + " - " + "Crédito" + " - " + valor;
+
+			if (conta.creditarValor(historico, valor)) {
+
+				return true;
+			}
+
+			return false;
+		} else {
+			throw new CreditarValorException("Número de conta inválido (" + numeroConta + ")");
 		}
 	}
 
@@ -75,7 +95,7 @@ public class ControladorCaixa implements IControladorCaixa {
 		caixa.recarregar(pwd);
 	}
 
-	public Caixa getCaixa() {
+	protected Caixa getCaixa() {
 		return this.caixa;
 	}
 

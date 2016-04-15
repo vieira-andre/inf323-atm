@@ -1,5 +1,6 @@
 package br.unicamp.ic.caixaautomatico.spec;
 
+import br.unicamp.ic.caixaautomatico.exceptions.CreditarValorException;
 import br.unicamp.ic.caixaautomatico.exceptions.DebitarValorException;
 import br.unicamp.ic.caixaautomatico.exceptions.EfetuarSaqueException;
 import br.unicamp.ic.caixaautomatico.exceptions.ObterExtratoException;
@@ -13,6 +14,8 @@ public interface IControladorCaixa {
 	String consultarExtrato(int numeroConta, int pwd) throws ObterExtratoException;
 
 	boolean efetuarSaque(int numeroConta, int pwd, float valor) throws EfetuarSaqueException, DebitarValorException;
+
+	boolean efetuarDeposito(int numeroConta, float valor) throws CreditarValorException;
 
 	void recarregar(int pwd) throws RecarregarCaixaException;
 
