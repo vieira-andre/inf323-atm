@@ -34,13 +34,17 @@ public class TrmCxAut implements ITrmCxAut {
 			try {
 				switch (op) {
 				case 1:
-					try {
-						float saldo = controladorCaixa.consultarSaldo(getInt("número da conta"), getInt("senha"));
+					if (modoAtual != 0) {
+						try {
+							float saldo = controladorCaixa.consultarSaldo(getInt("número da conta"), getInt("senha"));
 
-						if (saldo != -1) // testa se consulta foi rejeitada
-							System.out.println("Saldo atual: " + saldo);
-					} catch (ObterSaldoException e) {
-						System.out.println(e.getMessage());
+							if (saldo != -1) // testa se consulta foi rejeitada
+								System.out.println("Saldo atual: " + saldo);
+						} catch (ObterSaldoException e) {
+							System.out.println(e.getMessage());
+						}
+					} else {
+						System.out.println("Saldo do caixa: " + controladorCaixa.getCaixa().obterSaldoCaixa());
 					}
 
 					break;
@@ -108,8 +112,8 @@ public class TrmCxAut implements ITrmCxAut {
 				if (op != 1 && op != 2 && op != 8 && op != 9)
 					op = 0;
 			} else { // modo supervisor
-				op = getInt("opcao: 3 = recarrega, 8=modo cliente, 9=sai");
-				if (op != 3 && op != 8 && op != 9)
+				op = getInt("opcao: 1 = consulta saldo do caixa, 3 = recarrega, 8=modo cliente, 9=sai");
+				if (op != 1 && op != 3 && op != 8 && op != 9)
 					op = 0;
 			}
 		} while (op == 0);

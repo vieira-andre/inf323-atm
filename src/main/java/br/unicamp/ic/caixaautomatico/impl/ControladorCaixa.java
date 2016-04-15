@@ -75,6 +75,10 @@ public class ControladorCaixa implements IControladorCaixa {
 		caixa.recarregar(pwd);
 	}
 
+	public Caixa getCaixa() {
+		return this.caixa;
+	}
+
 	@Override
 	public boolean validarSenha(int pwd) {
 		if (pwd == this.senhaDoCaixa) {

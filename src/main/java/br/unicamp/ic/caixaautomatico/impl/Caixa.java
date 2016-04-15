@@ -10,7 +10,7 @@ public class Caixa implements ICaixa {
 
 	public Caixa(int senhaCaixa) {
 		this.senha = senhaCaixa;
-		this.saldoDoCaixa = 0;
+		this.saldoDoCaixa = 1000;
 	}
 
 	@Override
