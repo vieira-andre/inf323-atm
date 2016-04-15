@@ -80,7 +80,6 @@ public class ControladorCaixa implements IControladorCaixa {
 			String historico = getDataAtual() + " - " + "Crédito" + " - " + valor;
 
 			if (conta.creditarValor(historico, valor)) {
-
 				return true;
 			}
 
