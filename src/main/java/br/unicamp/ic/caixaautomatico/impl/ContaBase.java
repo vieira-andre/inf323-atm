@@ -81,6 +81,7 @@ public abstract class ContaBase implements IConta {
 					sb.append("\n");
 				}
 
+				sb.append("\n");
 				sb.append("SALDO: " + this.saldoAtual);
 
 				return sb.toString();
@@ -100,12 +101,6 @@ public abstract class ContaBase implements IConta {
 					if (isSaldoAtualMaiorOuIgualValor(valor)) {
 						if (isValorDentroDoLimite(valor)) {
 							if (isValorMultiploDe10(valor)) {
-								this.saldoAnterior = this.saldoAtual;
-								this.saldoAtual -= valor;
-
-								this.historico.add(historico);
-								this.valorLanc.add(valor);
-
 								return true;
 							} else {
 								throw new DebitarValorException("O valor deve ser múltiplo de 10.");
@@ -192,6 +187,26 @@ public abstract class ContaBase implements IConta {
 		}
 
 		return false;
+	}
+
+	protected void setSaldoAnterior(float saldoAtual) {
+		this.saldoAnterior = saldoAtual;
+	}
+
+	protected float getSaldoAtual() {
+		return this.saldoAtual;
+	}
+
+	protected void setSaldoAtual(float valor) {
+		this.saldoAtual -= valor;
+	}
+
+	protected void setHistorico(String historico) {
+		this.historico.add(historico);
+	}
+
+	protected void setValorLanc(float valor) {
+		this.valorLanc.add(valor);
 	}
 
 }
