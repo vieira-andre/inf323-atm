@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
+import br.unicamp.ic.caixaautomatico.exceptions.DebitarValorException;
 import br.unicamp.ic.caixaautomatico.spec.ITrmCxAut;
 
 public class TrmCxAut implements ITrmCxAut {
@@ -38,8 +39,13 @@ public class TrmCxAut implements ITrmCxAut {
 
 					break;
 				case 2:
-					boolean b = controladorCaixa.efetuarSaque(getInt("número da conta"), getInt("senha"),
-							getInt("valor"));
+					boolean b = false;
+
+					try {
+						b = controladorCaixa.efetuarSaque(getInt("número da conta"), getInt("senha"), getInt("valor"));
+					} catch (DebitarValorException e) {
+						System.out.println(e.getMessage());
+					}
 
 					if (b) // testa se saque foi aceito
 						System.out.println("Pode retirar o dinheiro");

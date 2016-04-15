@@ -69,20 +69,17 @@ public class ControladorCaixa implements IControladorCaixa {
 		if (conta != null) {
 			String historico = getDataAtual() + " - " + "Débito" + " - " + valor;
 
-			try {
-				conta.debitarValor(historico, valor, pwd);
+			if (conta.debitarValor(historico, valor, pwd)) {
 
 				caixa.liberarNotas((int) valor);
 
 				return true;
-			} catch (DebitarValorException e) {
-				System.out.println(e.getMessage());
 			}
+
+			return false;
 		} else {
 			throw new EfetuarSaqueException("Número de conta inválido " + numeroConta);
 		}
-
-		return false;
 	}
 
 	@Override
