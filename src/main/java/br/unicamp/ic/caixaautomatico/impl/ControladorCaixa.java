@@ -31,16 +31,10 @@ public class ControladorCaixa implements IControladorCaixa {
 		IConta conta = cadastroContas.buscaConta(numeroConta);
 
 		if (conta != null) {
-			try {
-				return conta.obterSaldo(pwd);
-			} catch (ObterSaldoException e) {
-				System.out.println(e.getMessage());
-			}
+			return conta.obterSaldo(pwd);
 		} else {
 			throw new ObterSaldoException("Número de conta inválido");
 		}
-
-		return -1;
 	}
 
 	@Override
@@ -48,16 +42,10 @@ public class ControladorCaixa implements IControladorCaixa {
 		IConta conta = cadastroContas.buscaConta(numeroConta);
 
 		if (conta != null) {
-			try {
-				return conta.obterExtrato(pwd);
-			} catch (ObterExtratoException e) {
-				System.out.println(e.getMessage());
-			}
+			return conta.obterExtrato(pwd);
 		} else {
 			throw new ObterExtratoException("Número de conta inválido");
 		}
-
-		return null;
 	}
 
 	@Override
@@ -84,20 +72,16 @@ public class ControladorCaixa implements IControladorCaixa {
 
 	@Override
 	public void recarregar(int pwd) throws RecarregarCaixaException {
-		if (this.validarSenha(pwd)) {
-			caixa.recarregar(pwd);
-		} else {
-			throw new RecarregarCaixaException("Senha incorreta!");
-		}
+		caixa.recarregar(pwd);
 	}
 
 	@Override
 	public boolean validarSenha(int pwd) {
 		if (pwd == this.senhaDoCaixa) {
 			return true;
+		} else {
+			throw new IllegalArgumentException("Senha incorreta!");
 		}
-
-		return false;
 	}
 
 	private String getDataAtual() {

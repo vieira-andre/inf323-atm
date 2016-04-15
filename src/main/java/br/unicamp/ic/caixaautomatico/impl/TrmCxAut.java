@@ -7,6 +7,8 @@ import java.io.Reader;
 import java.io.StreamTokenizer;
 
 import br.unicamp.ic.caixaautomatico.exceptions.DebitarValorException;
+import br.unicamp.ic.caixaautomatico.exceptions.ObterSaldoException;
+import br.unicamp.ic.caixaautomatico.exceptions.RecarregarCaixaException;
 import br.unicamp.ic.caixaautomatico.spec.ITrmCxAut;
 
 public class TrmCxAut implements ITrmCxAut {
@@ -32,10 +34,14 @@ public class TrmCxAut implements ITrmCxAut {
 			try {
 				switch (op) {
 				case 1:
-					float saldo = controladorCaixa.consultarSaldo(getInt("número da conta"), getInt("senha"));
+					try {
+						float saldo = controladorCaixa.consultarSaldo(getInt("número da conta"), getInt("senha"));
 
-					if (saldo != -1) // testa se consulta foi rejeitada
-						System.out.println("Saldo atual: " + saldo);
+						if (saldo != -1) // testa se consulta foi rejeitada
+							System.out.println("Saldo atual: " + saldo);
+					} catch (ObterSaldoException e) {
+						System.out.println(e.getMessage());
+					}
 
 					break;
 				case 2:
@@ -54,7 +60,13 @@ public class TrmCxAut implements ITrmCxAut {
 
 					break;
 				case 3:
-					controladorCaixa.recarregar(getInt("senha"));
+					try {
+						controladorCaixa.recarregar(getInt("senha"));
+
+						System.out.println("Recarga realizada");
+					} catch (RecarregarCaixaException e) {
+						System.out.println(e.getMessage());
+					}
 
 					break;
 				case 8:
@@ -72,13 +84,17 @@ public class TrmCxAut implements ITrmCxAut {
 
 	@Override
 	public void alternarModo(int senhaSupervisor) {
-		if (this.controladorCaixa.validarSenha(senhaSupervisor)) {
-			if (this.modoAtual == TrmCxAut.MODO_SUPERVISOR)
-				this.modoAtual = TrmCxAut.MODO_CLIENTE;
+		try {
+			controladorCaixa.validarSenha(senhaSupervisor);
+
+			if (modoAtual == TrmCxAut.MODO_SUPERVISOR)
+				modoAtual = TrmCxAut.MODO_CLIENTE;
 			else
-				this.modoAtual = TrmCxAut.MODO_SUPERVISOR;
-		} else {
-			throw new IllegalArgumentException("Senha incorreta!");
+				modoAtual = TrmCxAut.MODO_SUPERVISOR;
+
+			System.out.println("Alternância de modo realizada");
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
