@@ -56,17 +56,16 @@ public class ControladorCaixa implements IControladorCaixa {
 		IConta conta = cadastroContas.buscaConta(numeroConta);
 
 		if (conta != null) {
+			if (!(caixa.obterSaldoCaixa() > 0)) {
+				throw new EfetuarSaqueException("Não há saldo em caixa");
+			} else if (caixa.obterSaldoCaixa() < valor) {
+				throw new EfetuarSaqueException("Não há saldo em caixa suficiente para a transação");
+			}
+
 			String historico = getDataAtual() + " - " + "Débito" + " - " + valor;
 
 			if (conta.debitarValor(historico, valor, pwd)) {
-
-				if (!(caixa.obterSaldoCaixa() > 0)) {
-					throw new EfetuarSaqueException("Não há saldo em caixa");
-				} else if (caixa.obterSaldoCaixa() < valor) {
-					throw new EfetuarSaqueException("Não há saldo em caixa suficiente para a transação");
-				}
-
-				operacoesDeSaque((ContaBase) conta, valor, historico);
+				caixa.liberarNotas((int) valor);
 
 				return true;
 			}
@@ -75,15 +74,6 @@ public class ControladorCaixa implements IControladorCaixa {
 		} else {
 			throw new EfetuarSaqueException("Número de conta inválido (" + numeroConta + ")");
 		}
-	}
-
-	private void operacoesDeSaque(ContaBase conta, float valor, String historico) {
-		conta.setSaldoAnterior(conta.getSaldoAtual());
-		conta.setSaldoAtual(valor);
-		conta.setHistorico(historico);
-		conta.setValorLanc(valor);
-
-		caixa.liberarNotas((int) valor);
 	}
 
 	@Override
